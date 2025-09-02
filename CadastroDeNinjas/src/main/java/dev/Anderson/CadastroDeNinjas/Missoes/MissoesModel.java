@@ -1,12 +1,18 @@
 package dev.Anderson.CadastroDeNinjas.Missoes;
 
-import dev.Anderson.CadastroDeNinjas.Ninjas.Controller.NinjaModel;
+import dev.Anderson.CadastroDeNinjas.Ninjas.NinjaModel;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Entity
 @Table(name = "tb_missoes")
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
 public class MissoesModel {
 
     @Id
@@ -21,6 +27,6 @@ public class MissoesModel {
 
     // @OneToMany Uma missao pode ter varios ninjas
     @OneToMany(mappedBy = "missoes")
-    private List<NinjaModel> ninja;
+    private List<NinjaModel> ninjas;
 
 }
