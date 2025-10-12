@@ -28,7 +28,7 @@ public class NinjaModel {
     @Column (name = "img_url")
     private String imgUrl;
 
-    @Column (name = "idadegi")
+    @Column (name = "idade")
     private int idade;
 
 
@@ -38,5 +38,7 @@ public class NinjaModel {
 
     private MissoesModel missoes;
 
+
+    // CONTINUAR NA AULA 23
 
 }
