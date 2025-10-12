@@ -1,0 +1,4 @@
+2025-10-11 22:51:44.820855-03:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "ALTER TABLE TB_CADASTRO \000d\000a[*]REMOVE COLUMN IDADEGI"; expected "., ADD, SET, RENAME, DROP, ALTER"; SQL statement:
+ALTER TABLE TB_CADASTRO 
+REMOVE COLUMN IDADEGI [42001-232]
