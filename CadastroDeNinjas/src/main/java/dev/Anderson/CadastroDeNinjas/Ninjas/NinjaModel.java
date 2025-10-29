@@ -39,6 +39,6 @@ public class NinjaModel {
     private MissoesModel missoes;
 
 
-    // CONTINUAR NA AULA 23
+
 
 }
