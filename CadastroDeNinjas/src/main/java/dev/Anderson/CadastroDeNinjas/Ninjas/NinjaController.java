@@ -1,9 +1,8 @@
 package dev.Anderson.CadastroDeNinjas.Ninjas;
 
-
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
+
 
 @RestController
 @RequestMapping("/ninjas")
@@ -30,7 +29,8 @@ public class NinjaController {
         // Mostrar todos os Ninjas (read)
         @GetMapping("/listar")
         public List<NinjaDTO> listarNinjas() {
-            return ninjaService.listarNinjas();
+
+        return ninjaService.listarNinjas();
         }
 
 
@@ -56,5 +56,8 @@ public class NinjaController {
 
 
 
+
+
+        //continua na aula 32
 
 }
