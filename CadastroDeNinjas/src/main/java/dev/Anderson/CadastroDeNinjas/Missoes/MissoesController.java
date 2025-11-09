@@ -1,5 +1,6 @@
 package dev.Anderson.CadastroDeNinjas.Missoes;
 
+
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -7,6 +8,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/missoes")
 public class MissoesController {
+
 
     private MissoesService missoesService;
 
@@ -22,10 +24,10 @@ public class MissoesController {
 
     //mostrar todas as missoes (read)
 
-   /* @GetMapping("/listar")
+    @GetMapping("/listar")
     public List<MissoesDTO> listarMissoes() {
-       return MissoesService.listarMissoes();*/
-
+        return this.missoesService.listarMissoes();
+    }
 
     //Procurar Ninja por Id (read)
     @GetMapping("listar/{id}")
