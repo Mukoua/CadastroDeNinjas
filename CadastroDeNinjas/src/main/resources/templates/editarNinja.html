@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        margin: 0;
+        padding: 40px 20px;
+        color: #333;
+    }
+
+    .container {
+        max-width: 1000px;
+        margin: 0 auto;
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 16px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        overflow: hidden;
+    }
+
+    h1 {
+        text-align: center;
+        padding: 30px 20px;
+        margin: 0;
+        background: #ff9500;
+        color: white;
+        font-size: 2.5rem;
+        text-shadow: 0 2px 10px rgba(0,0,0,0.4);
+    }
+
+    .card {
+        padding: 40px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 40px;
+        align-items: flex-start;
+        justify-content: center;
+    }
+
+    .ninja-img {
+        flex: 1 1 300px;
+        text-align: center;
+    }
+
+    .ninja-img img {
+        width: 280px;
+        height: 380px;
+        object-fit: cover;
+        border-radius: 20px;
+        border: 6px solid #ff9500;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        transition: transform 0.4s ease;
+    }
+
+    .ninja-img img:hover {
+        transform: scale(1.08);
+    }
+
+    .form-area {
+        flex: 2 1 500px;
+        background: #f8f9fa;
+        padding: 35px;
+        border-radius: 16px;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    }
+
+    .form-group {
+        margin-bottom: 24px;
+    }
+
+    label {
+        display: block;
+        font-weight: 700;
+        color: #ff9500;
+        margin-bottom: 8px;
+        font-size: 1.1rem;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="number"],
+    select {
+        width: 100%;
+        padding: 14px 16px;
+        border: 2px solid #ddd;
+        border-radius: 12px;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+        box-sizing: border-box;
+    }
+
+    input:focus, select:focus {
+        outline: none;
+        border-color: #ff9500;
+        box-shadow: 0 0 0 4px rgba(255, 149, 0, 0.2);
+    }
+
+    .missao-box {
+        background: linear-gradient(135deg, #ffeaa7, #fdcb6e);
+        padding: 25px;
+        border-radius: 16px;
+        margin-top: 20px;
+        box-shadow: 0 6px 20px rgba(253, 203, 110, 0.4);
+    }
+
+    .missao-box h3 {
+        margin: 0 0 20px 0;
+        color: #e67e22;
+        font-size: 1.5rem;
+        text-align: center;
+    }
+
+    .btn-group {
+        text-align: center;
+        margin-top: 50px;
+        padding: 20px;
+    }
+
+    .btn {
+        display: inline-block;
+        padding: 14px 32px;
+        margin: 0 12px;
+        border-radius: 50px;
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+        min-width: 180px;
+        cursor: pointer;
+        border: none;
+    }
+
+    .btn-voltar {
+        background: #7f8c8d;
+        color: white;
+    }
+
+    .btn-voltar:hover {
+        background: #95a5a6;
+        transform: translateY(-4px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    }
+
+    .btn-salvar {
+        background: #27ae60;
+        color: white;
+    }
+
+    .btn-salvar:hover {
+        background: #219653;
+        transform: translateY(-4px);
+        box-shadow: 0 10px 25px rgba(39, 174, 96, 0.5);
+    }
+
+    /* Responsivo */
+    @media (max-width: 768px) {
+        .card {
+            flex-direction: column;
+            padding: 20px;
+        }
+        .ninja-img img {
+            width: 240px;
+            height: 330px;
+        }
+        .form-area {
+            padding: 25px;
+        }
+        .btn {
+            display: block;
+            margin: 12px auto;
+            width: 80%;
+        }
+    }
+</style>
+
+
+
+<form th:action="@{/ninjas/ui/salvar}" th:object="${ninja}" method="post">
+    <input type="hidden" th:field="*{id}" />
+
+    <div class="card">
+        <div class="ninja-img">
+            <img th:src="*{imgUrl} ?: 'https://via.placeholder.com/280x380/2c3e50/ffffff?text=Ninja'"
+                 alt="Foto do ninja">
+        </div>
+
+        <div class="form-area">
+            <!-- todos os seus campos aqui (imgUrl, nome, idade, email, rank, missão...) -->
+            <div class="form-group">
+                <label>URL da Imagem</label>
+                <input type="text" th:field="*{imgUrl}">
+            </div>
+            <div class="form-group">
+                <label>Nome Completo</label>
+                <input type="text" th:field="*{nome}" required>
+            </div>
+            <div class="form-group">
+                <label>Idade</label>
+                <input type="number" th:field="*{idade}" required>
+            </div>
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" th:field="*{email}" required>
+            </div>
+            <div class="form-group">
+                <label>Rank</label>
+                <select th:field="*{rank}" required>
+                    <option value="Genin">GENIN</option>
+                    <option value="Chunin">CHUNIN</option>
+                    <option value="Jounin">JOUNIN</option>
+                    <option value="ANBU">ANBU</option>
+                    <option value="Kage">KAGE</option>
+                </select>
+            </div>
+
+            <div class="missao-box">
+                <h3>Missão Atual</h3>
+
+                <div class="form-group">
+                    <label>Escolha a missão</label>
+                    <select th:field="*{missoesId}">
+                        <option value="">-- Sem missão --</option>
+                        <option th:each="missao : ${todasMissoes}"
+                                th:value="${missao.id}"
+                                th:text="${missao.nomeDaMissao} + ' (Dificuldade: ' + missao.dificuldade + ')'"
+                                th:selected="${missao.id == ninja.missoesId}">
+                        </option>
+                    </select>
+                </div>
+
+                <!-- Missão atual (opcional) -->
+                <div th:if="${ninja.missoesId != null}"
+                     style="margin-top: 12px; padding: 12px; background: #d4edda; border-radius: 8px; color: #155724;">
+                    <strong>Missão atual:</strong>
+                    <span th:text="${todasMissoes.stream().filter(m -> m.id == ninja.missoesId).findFirst().orElse(null).nomeDaMissao}"></span>
+                    <small th:text="'(Dificuldade: ' + ${todasMissoes.stream().filter(m -> m.id == ninja.missoesId).findFirst().orElse(null).dificuldade} + ')'"></small>
+                </div>
+            </div>
+
+        <div class="btn-group">
+            <a th:href="@{/ninjas/ui/listar}" class="btn btn-voltar">← Voltar</a>
+            <button type="submit" class="btn btn-salvar">Salvar Alterações</button>
+        </div>*/
+</form>

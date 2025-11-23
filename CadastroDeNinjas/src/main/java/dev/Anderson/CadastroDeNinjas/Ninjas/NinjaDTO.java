@@ -20,5 +20,9 @@ public class NinjaDTO {
     private int idade;
     private String rank;
     private MissoesModel missoes;
+    private Long missoesId;
 
+    public Long getMissoesId() { return missoesId; }
+    public void setMissoesId(Long missoesId) { this.missoesId = missoesId; }
 }
+

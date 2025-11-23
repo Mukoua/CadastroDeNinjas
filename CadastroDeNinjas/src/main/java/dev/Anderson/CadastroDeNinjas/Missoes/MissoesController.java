@@ -26,7 +26,7 @@ public class MissoesController {
 
     @GetMapping("/listar")
     public List<MissoesDTO> listarMissoes() {
-        return this.missoesService.listarMissoes();
+        return this.missoesService.listarTodas();
     }
 
     //Procurar Ninja por Id (read)

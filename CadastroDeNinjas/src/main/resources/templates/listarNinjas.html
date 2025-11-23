@@ -82,6 +82,7 @@
             transform: scale(1.15);
         }
 
+
         /* Botões de ação */
         .btn {
             display: inline-block;
@@ -93,6 +94,34 @@
             font-size: 0.9rem;
             transition: all 0.3s ease;
             min-width: 90px;
+        }
+        .btn-adicionar {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: #ff9500;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            box-shadow: 0 6px 15px rgba(52, 152, 219, 0.4);
+            transition: all 0.3s ease;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-adicionar:hover {
+            background: #3498db;
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px rgba(52, 152, 219, 0.6);
+        }
+
+        .btn-adicionar::before {
+            content: "➕";
+            font-size: 1.4rem;
         }
 
         .btn-detalhes {
@@ -159,6 +188,9 @@
 <div class="container">
     <h1>🍥 Lista de Ninjas da Folha</h1>
 
+    <a th:href="@{/ninjas/ui/adicionar}" class="btn-adicionar">
+        Adicionar Ninja
+    </a>
     <table>
         <thead>
         <tr>

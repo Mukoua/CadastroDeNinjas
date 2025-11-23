@@ -20,7 +20,7 @@ public class MissoesService {
     }
     // Listar todas as missoes
 
-    public List<MissoesDTO> listarMissoes(){
+    public List<MissoesDTO> listarTodas(){
         List<MissoesModel> missoes = missoesRepository.findAll();
         return missoes.stream()
                 .map(missoesMapper::map)
@@ -48,4 +48,7 @@ public class MissoesService {
         missoesRepository.deleteById(id);
     }
 
+    public MissoesModel buscarPorId(Long id) {
+        return missoesRepository.findById(id).orElse(null);
+    }
 }

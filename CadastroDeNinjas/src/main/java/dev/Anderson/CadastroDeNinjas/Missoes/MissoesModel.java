@@ -16,23 +16,40 @@ import java.util.List;
 @AllArgsConstructor
 @Data
 @ToString
+
+
 public class MissoesModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
-    @Column(name="id")
     private Long id;
 
-    @Column(name = "nomeDaMissao")
+    @Column(name = "nome_da_missao")
     private String nomeDaMissao;
 
-    @Column(name = "dificuldade")
     private String dificuldade;
 
-     //@OneToMany Uma missao pode ter varios ninjas
+    // GETTERS OBRIGATÓRIOS (EXATAMENTE ASSIM!)
+    public Long getId() {
+        return id;
+    }
+
+    public String getNomeDaMissao() {  // ← EXATAMENTE ESSE NOME!
+        return nomeDaMissao;
+    }
+
+    public String getDificuldade() {   // ← EXATAMENTE ESSE NOME!
+        return dificuldade;
+    }
+
+    // setters (se precisar)
+    public void setId(Long id) { this.id = id; }
+    public void setNomeDaMissao(String nomeDaMissao) { this.nomeDaMissao = nomeDaMissao; }
+    public void setDificuldade(String dificuldade) { this.dificuldade = dificuldade; }
+}
+//@OneToMany Uma missao pode ter varios ninjas
    /* @OneToMany(mappedBy = "missoes")
     @JsonIgnore
     private List<MissoesModel> missoes;*/
 
-}
+

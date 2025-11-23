@@ -1,6 +1,9 @@
 package dev.Anderson.CadastroDeNinjas.Ninjas;
 
+import dev.Anderson.CadastroDeNinjas.Missoes.MissoesModel;
+import dev.Anderson.CadastroDeNinjas.Missoes.MissoesService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,10 +16,14 @@ public class NinjaService {
 
     private final NinjaRepository ninjaRepository;
     private final NinjaMapper ninjaMapper;
+    private final MissoesService missoesService;
 
-    public NinjaService(NinjaRepository ninjaRepository, NinjaMapper ninjaMapper) {
+
+
+    public NinjaService(NinjaRepository ninjaRepository, NinjaMapper ninjaMapper, MissoesService missoesService) {
         this.ninjaRepository = ninjaRepository;
         this.ninjaMapper = ninjaMapper;
+        this.missoesService = missoesService;
     }
 // Listar todos os meus ninjas
 
@@ -50,14 +57,28 @@ public class NinjaService {
 
      // Atualizar ninja
 
-            public NinjaDTO atualizarNinja (Long id, NinjaDTO ninjaDTO) {
-               Optional<NinjaModel> ninjaExistente = ninjaRepository.findById(id);
-                if (ninjaExistente.isPresent()) {
-                    NinjaModel ninjaAtualizado = ninjaMapper.map(ninjaDTO);
-                    ninjaAtualizado.setId(id);
-                    NinjaModel ninjaSalvo = ninjaRepository.save(ninjaAtualizado);
-                    return ninjaMapper.map(ninjaSalvo);
-                }
-         return null;
-         }
+    @Transactional
+    public NinjaDTO atualizarNinja(Long id, NinjaDTO ninjaDTO) {
+        Optional<NinjaModel> optional = ninjaRepository.findById(id);
+        if (optional.isEmpty()) return null;
+
+        NinjaModel ninja = optional.get();
+
+        ninja.setNome(ninjaDTO.getNome());
+        ninja.setIdade(ninjaDTO.getIdade());
+        ninja.setEmail(ninjaDTO.getEmail());
+        ninja.setRank(ninjaDTO.getRank());
+        ninja.setImgUrl(ninjaDTO.getImgUrl());
+
+        // TRATAMENTO PERFEITO DA MISSÃO
+        if (ninjaDTO.getMissoesId() != null) {
+            MissoesModel missao = missoesService.buscarPorId(ninjaDTO.getMissoesId());
+            ninja.setMissoes(missao);
+        } else {
+            ninja.setMissoes(null); // remove missão
+        }
+
+        NinjaModel salvo = ninjaRepository.save(ninja);
+        return ninjaMapper.map(salvo);
+    }
      }
