@@ -6,12 +6,14 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @Table(name = "tb_cadastro")
 @NoArgsConstructor //Lombok constroi o construtor vazio automaticamente
 @AllArgsConstructor //Lombok constroi o construtores cheios automaticamente
 @Data //Lombok constroi os Getters e Setters automaticamente
+@ToString(exclude = "missoes" )
 public class NinjaModel {
 
     @Id

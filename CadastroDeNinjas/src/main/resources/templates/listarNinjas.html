@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Ninjas</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            margin: 0;
+            padding: 40px 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+
+        h1 {
+            text-align: center;
+            padding: 30px 20px;
+            margin: 0;
+            background: #ff9500;
+            color: white;
+            font-size: 2.5rem;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.4);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+
+        th {
+            background: #2c3e50;
+            color: white;
+            padding: 18px 12px;
+            text-align: center;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+        }
+
+        td {
+            padding: 16px 12px;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+        }
+
+        tr {
+            transition: all 0.3s ease;
+        }
+
+        tr:hover {
+            background-color: #f8f9fa;
+            transform: scale(1.01);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+
+        /* Imagem dos ninjas */
+        td img {
+            width: 80px;
+            height: 110px;
+            object-fit: cover;
+            border-radius: 12px;
+            border: 3px solid #ff9500;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            transition: transform 0.3s;
+        }
+
+        td img:hover {
+            transform: scale(1.15);
+        }
+
+        /* Botões de ação */
+        .btn {
+            display: inline-block;
+            padding: 8px 16px;
+            margin: 0 4px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            min-width: 90px;
+        }
+
+        .btn-detalhes {
+            background: #3498db;
+            color: white;
+        }
+
+        .btn-editar {
+            background: #f39c12;
+            color: white;
+        }
+
+        .btn-deletar {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+        }
+
+        .btn-detalhes:hover { background: #2980b9; }
+        .btn-editar:hover   { background: #e67e22; }
+        .btn-deletar:hover  { background: #c0392b; }
+
+        /* Responsivo */
+        @media (max-width: 768px) {
+            table, thead, tbody, th, td, tr {
+                display: block;
+            }
+
+            thead tr { display: none; }
+
+            tr {
+                margin-bottom: 20px;
+                border: 1px solid #ddd;
+                border-radius: 12px;
+                padding: 15px;
+            }
+
+            td {
+                text-align: right;
+                padding-left: 50%;
+                position: relative;
+            }
+
+            td::before {
+                content: attr(data-label);
+                position: absolute;
+                left: 15px;
+                width: 45%;
+                font-weight: bold;
+                text-align: left;
+                color: #ff9500;
+            }
+
+            .btn { display: block; margin: 8px auto; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>🍥 Lista de Ninjas da Folha</h1>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Imagem</th>
+            <th>Id</th>
+            <th>Nome</th>
+            <th>Idade</th>
+            <th>Email</th>
+            <th>Rank</th>
+            <th>Missão Atual</th>
+            <th>Ações</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="ninja : ${ninjas}">
+            <!-- Colunas na ordem correta -->
+            <td data-label="Imagem">
+                <img th:src="${ninja.imgUrl}" alt="Foto do ninja" />
+            </td>
+            <td data-label="Id" th:text="${ninja.id}"></td>
+            <td data-label="Nome" th:text="${ninja.nome}"></td>
+            <td data-label="Idade" th:text="${ninja.idade}"></td>
+            <td data-label="Email" th:text="${ninja.email}"></td>
+            <td data-label="Rank" th:text="${ninja.rank}"></td>
+            <td data-label="Missão">
+                    <span th:if="${ninja.missoes != null}">
+                        <strong th:text="${ninja.missoes.nomeDaMissao}"></strong><br>
+                        Dificuldade: <span th:text="${ninja.missoes.dificuldade}"></span>
+                    </span>
+                <span th:if="${ninja.missoes == null}" style="color: #95a5a6; font-style: italic;">
+                        Sem missão no momento
+                    </span>
+            </td>
+            <td data-label="Ações">
+                <a th:href="@{|/ninjas/ui/listar/${ninja.id}|}" class="btn btn-detalhes">Ver</a>
+                <a th:href="@{/ninjas/ui/editar/{id}(id=${ninja.id})}"   class="btn btn-editar">Editar</a>
+                <a th:href="@{/ninjas/ui/deletar/{id}(id=${ninja.id})}"
+                   class="btn btn-deletar"
+                   onclick="return confirm('Tem certeza que quer apagar esse ninja permanentemente?')">Deletar</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

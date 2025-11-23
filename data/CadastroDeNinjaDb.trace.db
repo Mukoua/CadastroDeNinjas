@@ -2,3 +2,9 @@
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "ALTER TABLE TB_CADASTRO \000d\000a[*]REMOVE COLUMN IDADEGI"; expected "., ADD, SET, RENAME, DROP, ALTER"; SQL statement:
 ALTER TABLE TB_CADASTRO 
 REMOVE COLUMN IDADEGI [42001-232]
+2025-11-16 22:17:33.130432-03:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "IMG_URL CHARACTER VARYING(255)": "'https://img.wattpad.com/6fbf1b160e4fd1c3630c6c1c6e74311221b45d0e/68747470733a2f... (317)"; SQL statement:
+UPDATE "PUBLIC"."TB_CADASTRO" SET "ID"=? ,"EMAIL"=? ,"IMG_URL"=? ,"NOME"=? ,"MISSOES_ID"=? ,"RANK"=? ,"IDADE"=?  WHERE "ID"=? [22001-232]
+2025-11-16 22:17:33.135434-03:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "IMG_URL CHARACTER VARYING(255)": "'https://img.wattpad.com/6fbf1b160e4fd1c3630c6c1c6e74311221b45d0e/68747470733a2f... (317)"; SQL statement:
+UPDATE "PUBLIC"."TB_CADASTRO" SET "ID"=? ,"EMAIL"=? ,"IMG_URL"=? ,"NOME"=? ,"MISSOES_ID"=? ,"RANK"=? ,"IDADE"=?  WHERE "ID"=? [22001-232]
