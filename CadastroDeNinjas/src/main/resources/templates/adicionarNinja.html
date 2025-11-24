@@ -10,10 +10,11 @@
 
     <style>
         * { box-sizing: border-box; }
+
         body {
             margin: 0;
             font-family: 'Kanit', sans-serif;
-            background: url('https://i.imgur.com/3hP2d8b.jpg') no-repeat center center fixed;
+            background: url('https://i.pinimg.com/originals/a1/a5/e2/a1a5e2b854ec59e830c1fccd4cd6f7a0.png') no-repeat center center fixed;
             background-size: cover;
             color: #fff;
             min-height: 100vh;
@@ -22,6 +23,8 @@
             justify-content: center;
             position: relative;
         }
+
+        /* Overlay para escurecer o fundo */
         body::before {
             content: '';
             position: absolute;
@@ -41,20 +44,25 @@
             position: relative;
             z-index: 2;
             text-align: center;
+            padding-top: 60px;
         }
 
         .konoha-symbol {
             width: 120px;
             height: 120px;
-            margin: -80px auto 20px;
+            margin: -20px auto 30px;
             background: url('https://i.pinimg.com/originals/a1/a5/e2/a1a5e2b854ec59e830c1fccd4cd6f7a0.png') center/contain no-repeat;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            top: 0;
         }
 
         h1 {
             color: #ff7300;
             text-shadow: 0 0 15px #ff7300;
-            font-size: 2.8rem;
-            margin: 10px 0 30px;
+            font-size: 2.5rem;
+            margin: 30px 0 30px;
         }
 
         .mensagem {
@@ -129,7 +137,7 @@
 
     <h1>Cadastro de Novo Ninja</h1>
 
-    <!-- Mensagem de sucesso ou erro -->
+    <!-- Mensagem de sucesso ou erro (Thymeleaf Syntax) -->
     <div th:if="${mensagem != null}"
          th:class="${mensagem.contains('sucesso') ? 'mensagem sucesso' : 'mensagem'}"
          th:text="${mensagem}">
@@ -164,7 +172,7 @@
     </form>
 
     <div class="footer">
-        <p>“Eu nunca volto atrás da minha palavra... essa é a minha vida de ninja!”</p>
+        <p>“Eu nunca volto atrás na minha palavra... essa é a minha vida de ninja!”</p>
         <strong>— Naruto Uzumaki</strong>
     </div>
 </div>
