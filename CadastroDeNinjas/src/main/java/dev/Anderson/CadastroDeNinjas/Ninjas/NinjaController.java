@@ -1,5 +1,9 @@
 package dev.Anderson.CadastroDeNinjas.Ninjas;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -18,12 +22,19 @@ public class NinjaController {
     }
 
     @GetMapping("/boasVindas")
+    @Operation(summary = "Mensagem de boas-vindas", description = "Essa rota dá uma mensagem de boas vindas para quem acessa ela")
+
     public String boasVindas() {
         return "Essa é a minha primeira mensagem nessa rota!!";
 
     }
         //Adicionar Ninja (create)
         @PostMapping("/criar")
+        @Operation(summary = "Cria um novo ninja", description = "Rota cria um novo ninja e insere no banco de dados")
+        @ApiResponses(value = {
+                @ApiResponse( responseCode = "201", description = "Ninja criado com sucesso"),
+                @ApiResponse( responseCode = "400", description = "Erro na criação do ninja")
+        })
         public ResponseEntity<String> criarNinja(@RequestBody NinjaDTO ninja) {
            NinjaDTO novoNinja = ninjaService.criarNinja(ninja);
             return ResponseEntity.status(HttpStatus.CREATED)
@@ -33,6 +44,7 @@ public class NinjaController {
 
         // Mostrar todos os Ninjas (read)
         @GetMapping("/listar")
+        @Operation(summary = "Lista todos os ninjas", description = "Essa rota cria uma lista com todos os ninjas")
         public ResponseEntity<List<NinjaDTO>> listarNinjas() {
             List<NinjaDTO> ninjas = ninjaService.listarNinjas();
             return ResponseEntity.ok(ninjas);
@@ -41,6 +53,11 @@ public class NinjaController {
 
         //Procurar Ninja por ID (read)
         @GetMapping("/listar/{id}")
+        @Operation(summary = "Lista os ninjas por Id", description = "Essa rota lista um ninja por seu Id")
+        @ApiResponses(value = {
+                @ApiResponse( responseCode = "200", description = "Ninja encontrado com sucesso"),
+                @ApiResponse( responseCode = "404", description = "Erro na localização do ninja")
+        })
         public ResponseEntity<?> listarNinjasPorID(@PathVariable Long id) {
             NinjaDTO ninja = ninjaService.listarNinjasporId(id);
             if (ninja != null) {
@@ -55,7 +72,16 @@ public class NinjaController {
 
         // Alterar dados do Ninja (Update)
         @PutMapping("/alterar/{id}")
-        public ResponseEntity<?> alterarNinjasPorID(@PathVariable Long id, @RequestBody NinjaDTO ninjaAtualizado) {
+        @Operation(summary = "Altera o ninja pelo Id", description = "Essa rota altera o ninja pelo seu Id")
+        @ApiResponses(value = {
+                @ApiResponse( responseCode = "201", description = "Ninja alterado com sucesso"),
+                @ApiResponse( responseCode = "400", description = "Erro na alteração do ninja")
+        })
+        public ResponseEntity<?> alterarNinjasPorID(
+                @Parameter(description = "Usuario manda o id no caminho da requisicao")
+                @PathVariable Long id,
+                @Parameter( description = "Usuario manda os dados do ninja a ser atualizado no corpo da requisicao" )
+                @RequestBody NinjaDTO ninjaAtualizado) {
            NinjaDTO ninja = ninjaService.atualizarNinja(id, ninjaAtualizado);
            if (ninja != null ){
                return ResponseEntity.ok(ninja);
@@ -67,6 +93,11 @@ public class NinjaController {
 
         //Deletar Ninja (Delete)
         @DeleteMapping("/deletar/{id}")
+        @Operation(summary = "Deleta o ninja pelo Id", description = "Essa rota deleta o ninja pelo seu Id")
+        @ApiResponses(value = {
+                @ApiResponse( responseCode = "201", description = "Ninja deletado com sucesso"),
+                @ApiResponse( responseCode = "400", description = "Não foi possivel deletar o ninja")
+        })
         public ResponseEntity<String> deletarNinjaPorID(@PathVariable Long id) {
             if (ninjaService.listarNinjasporId(id) != null) {
                 ninjaService.deletarNinjaPorId(id);
